@@ -17,9 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         floatingActionButton: buildFloatingActionButton(context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
