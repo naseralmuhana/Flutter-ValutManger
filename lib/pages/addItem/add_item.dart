@@ -56,85 +56,90 @@ class _AddItemPageState extends State<AddItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('Add New Item'),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: kDefaultPadding * 1.5,
-            horizontal: kDefaultPadding * 0.5,
-          ),
-          child: Form(
-            key: _formKey,
-            child: AutofillGroup(
-              child: Column(
-                children: [
-                  /// Url
-                  buildTextFormField(
-                    controller: _urlController,
-                    label: 'Url',
-                    textInputType: TextInputType.url,
-                    autofillHints: [AutofillHints.url],
-                  ),
-                  SizedBox(height: 15.0),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Add New Item'),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: kDefaultPadding * 1.5,
+              horizontal: kDefaultPadding * 0.5,
+            ),
+            child: Form(
+              key: _formKey,
+              child: AutofillGroup(
+                child: Column(
+                  children: [
+                    /// Url
+                    buildTextFormField(
+                      controller: _urlController,
+                      label: 'Url',
+                      textInputType: TextInputType.url,
+                      autofillHints: [AutofillHints.url],
+                    ),
+                    SizedBox(height: 15.0),
 
-                  /// Name
-                  buildTextFormField(
-                    controller: _nameController,
-                    label: 'Name',
-                    validator: _validation.isEmptyValidation,
-                    textInputType: TextInputType.name,
-                    autofillHints: [AutofillHints.url],
-                  ),
-                  SizedBox(height: 15.0),
+                    /// Name
+                    buildTextFormField(
+                      controller: _nameController,
+                      label: 'Name',
+                      validator: _validation.isEmptyValidation,
+                      textInputType: TextInputType.name,
+                      autofillHints: [AutofillHints.url],
+                    ),
+                    SizedBox(height: 15.0),
 
-                  /// Username
-                  buildTextFormField(
-                    controller: _usernameController,
-                    label: 'Username',
-                    autofillHints: [AutofillHints.name],
-                  ),
-                  SizedBox(height: 15.0),
+                    /// Username
+                    buildTextFormField(
+                      controller: _usernameController,
+                      label: 'Username',
+                      autofillHints: [AutofillHints.name],
+                    ),
+                    SizedBox(height: 15.0),
 
-                  /// Email
-                  buildTextFormField(
-                    controller: _emailController,
-                    label: 'Email',
-                    validator: _validation.emailValidator,
-                    autofillHints: [AutofillHints.email],
-                    textInputType: TextInputType.emailAddress,
-                  ),
-                  SizedBox(height: 15.0),
+                    /// Email
+                    buildTextFormField(
+                      controller: _emailController,
+                      label: 'Email',
+                      validator: _validation.emailValidator,
+                      autofillHints: [AutofillHints.email],
+                      textInputType: TextInputType.emailAddress,
+                    ),
+                    SizedBox(height: 15.0),
 
-                  /// Password
-                  buildTextFormField(
-                    controller: _passwordController,
-                    label: 'Password',
-                    validator: _validation.isEmptyValidation,
-                    obscureText: obscureText,
-                    autofillHints: [AutofillHints.password],
-                    textInputType: TextInputType.visiblePassword,
-                  ),
-                  SizedBox(height: 15.0),
+                    /// Password
+                    buildTextFormField(
+                      controller: _passwordController,
+                      label: 'Password',
+                      validator: _validation.isEmptyValidation,
+                      obscureText: obscureText,
+                      autofillHints: [AutofillHints.password],
+                      textInputType: TextInputType.visiblePassword,
+                    ),
+                    SizedBox(height: 15.0),
 
-                  /// Note
-                  buildTextFormField(
-                    controller: _noteController,
-                    label: 'Note',
-                    maxLines: 6,
-                    textInputType: TextInputType.multiline,
-                  ),
-                  SizedBox(height: 15.0),
+                    /// Note
+                    buildTextFormField(
+                      controller: _noteController,
+                      label: 'Note',
+                      maxLines: 6,
+                      textInputType: TextInputType.multiline,
+                    ),
+                    SizedBox(height: 15.0),
 
-                  /// add item button
-                  CustomElevatedButton(
-                    buttonLabel: 'Save',
-                    onPressed: _trySubmitForm,
-                  ),
-                ],
+                    /// add item button
+                    CustomElevatedButton(
+                      buttonLabel: 'Save',
+                      onPressed: _trySubmitForm,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -146,6 +151,7 @@ class _AddItemPageState extends State<AddItemPage> {
   /// Methods
   void _trySubmitForm() async {
     final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
     if (isValid) {
       try {
         await _firestore.collection('items').add({

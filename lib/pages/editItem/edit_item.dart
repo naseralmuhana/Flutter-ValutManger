@@ -161,6 +161,7 @@ class _EditItemPageState extends State<EditItemPage> {
   /// Methods
   void _trySubmitForm() async {
     final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
     if (isValid) {
       try {
         await _firestore.collection('items').doc(item.id).update({
@@ -172,7 +173,6 @@ class _EditItemPageState extends State<EditItemPage> {
           'note': _noteController.text,
         }).then((value) {
           _urlController.clear();
-
           _usernameController.clear();
           _emailController.clear();
           _passwordController.clear();

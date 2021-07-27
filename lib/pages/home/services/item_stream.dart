@@ -8,28 +8,49 @@ import 'package:password_manager/pages/home/widgets/item_card.dart';
 import 'package:password_manager/pages/home/widgets/slidable_widget.dart';
 
 class ItemsStream extends StatelessWidget {
+  final String? searchString;
+
+  const ItemsStream({this.searchString});
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     return StreamBuilder(
-      stream: _firestore.collection('items').snapshots(),
+      stream: _firestore.collection('items').orderBy('name').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
-          return ListView(
-            children: snapshot.data!.docs.map(
-              (item) {
-                return GestureDetector(
-                  child: SlidableWidget(
-                    child: ItemCard(item: item),
-                    item: item,
-                  ),
-                  onTap: () {
-                    customBottomSheet(context, item);
-                  },
+          return (searchString == null || searchString!.trim() == '')
+              ? ListView(
+                  children: snapshot.data!.docs.map(
+                    (item) {
+                      return GestureDetector(
+                        child: SlidableWidget(
+                          child: ItemCard(item: item),
+                          item: item,
+                        ),
+                        onTap: () {
+                          customBottomSheet(context, item);
+                        },
+                      );
+                    },
+                  ).toList(),
+                )
+              : ListView(
+                  children: snapshot.data!.docs.map(
+                    (item) {
+                      return item['name'].toString().toLowerCase().contains(searchString!.toLowerCase())
+                          ? GestureDetector(
+                              child: SlidableWidget(
+                                child: ItemCard(item: item),
+                                item: item,
+                              ),
+                              onTap: () {
+                                customBottomSheet(context, item);
+                              },
+                            )
+                          : Container();
+                    },
+                  ).toList(),
                 );
-              },
-            ).toList(),
-          );
         }
         return buildCenteredCircularIndicator();
       },
