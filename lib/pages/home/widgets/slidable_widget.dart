@@ -100,7 +100,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
 
   Future<void> deleteItem({required String id}) async {
     try {
-      await _firestore.collection('items').doc(id).delete();
+      await _firestore.collection('LoginItems').doc(id).delete();
     } catch (e) {}
   }
 

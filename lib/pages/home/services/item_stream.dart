@@ -15,7 +15,7 @@ class ItemsStream extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     return StreamBuilder(
-      stream: _firestore.collection('items').orderBy('name').snapshots(),
+      stream: _firestore.collection('LoginItems').orderBy('name').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           return (searchString == null || searchString!.trim() == '')

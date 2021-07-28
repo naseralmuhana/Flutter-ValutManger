@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/constants/variables.dart';
-import 'package:password_manager/pages/addItem/add_login.dart';
 import 'package:password_manager/pages/home/home.dart';
 import 'package:password_manager/widgets/bottomBar/components/custom_floating_action_button.dart';
+import 'package:password_manager/widgets/taskAppBar/task_app_bar.dart';
 
 class BottomBarWidget extends StatefulWidget {
-  static final String routeName = 'BottomBarWidget';
+  static final String routeName = 'BottomBarWidgetRoute';
   @override
   _BottomBarWidgetState createState() => _BottomBarWidgetState();
 }
@@ -48,11 +48,6 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
       {'page': HomePage(), 'title': 'Home'},
       {'page': HomePage(), 'title': 'Home'},
       {'page': HomePage(), 'title': 'Home'},
-
-      // {'page': FeedsScreens(), 'title': 'Feed'},
-      // {'page': SearchScreen(), 'title': 'Search'},
-      // {'page': CartScreen(), 'title': 'Cart'},
-      // {'page': UserScreen(), 'title': 'User'},
     ];
     super.initState();
   }
@@ -67,7 +62,7 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
       body: _pages[_selectedIndex]['page'],
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: CustomFloatingActionButton(
-        onPressed: () => Navigator.of(context).pushNamed(AddItemPage.routeName),
+        onPressed: () => Navigator.of(context).pushNamed(TabAppBar.routeName),
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 20.0,
