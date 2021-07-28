@@ -1,7 +1,6 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:password_manager/constants/variables.dart';
 
@@ -10,6 +9,7 @@ import 'package:password_manager/pages/home/home.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
 
 import 'package:password_manager/widgets/custom_elevated_button.dart';
+import 'package:password_manager/widgets/toast/toast.dart';
 
 class AddItemPage extends StatefulWidget {
   static final String routeName = 'AddItemPageRoute';
@@ -168,7 +168,7 @@ class _AddItemPageState extends State<AddItemPage> {
           _passwordController.clear();
           _noteController.clear();
         });
-        showToast(message: '${_nameController.text} has been Added Successfully.');
+        CustomToast.showToast(message: '${_nameController.text} has been Added Successfully.');
         Navigator.of(context).pushNamedAndRemoveUntil(
           HomePage.routeName,
           (route) => false,
@@ -178,13 +178,6 @@ class _AddItemPageState extends State<AddItemPage> {
         print(e);
       }
     }
-  }
-
-  void showToast({required String message}) {
-    Fluttertoast.showToast(
-      msg: message,
-      fontSize: 16.0,
-    );
   }
 
   /// Widget
@@ -259,7 +252,7 @@ class _AddItemPageState extends State<AddItemPage> {
         setState(() {
           controller.text += value;
         });
-        showToast(message: 'Paste Sucessfully');
+        CustomToast.showToast(message: 'Paste Sucessfully');
       },
     );
   }
@@ -271,7 +264,7 @@ class _AddItemPageState extends State<AddItemPage> {
       splashRadius: 20.0,
       onPressed: () async {
         await FlutterClipboard.copy(controller.text);
-        showToast(message: 'Copy to clipboard');
+        CustomToast.showToast(message: 'Copy to clipboard');
       },
     );
   }

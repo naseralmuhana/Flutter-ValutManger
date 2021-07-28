@@ -1,8 +1,8 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:password_manager/pages/editItem/edit_item.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
+import 'package:password_manager/widgets/toast/toast.dart';
 
 class BottomSheetCentent extends StatefulWidget {
   final item;
@@ -67,13 +67,6 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
     );
   }
 
-  void showToast({required String message}) {
-    Fluttertoast.showToast(
-      msg: message,
-      fontSize: 16.0,
-    );
-  }
-
   /// widgets
 
   Widget buildBottomSheetData(String label, String content) {
@@ -131,7 +124,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
       splashRadius: 20.0,
       onPressed: () async {
         await FlutterClipboard.copy(value);
-        showToast(message: 'Copy to clipboard');
+        CustomToast.showToast(message: 'Copy to clipboard');
       },
     );
   }
