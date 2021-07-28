@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:password_manager/constants/variables.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
 import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
-import 'package:password_manager/widgets/form/custom_form.dart';
+import 'package:password_manager/widgets/form/custom_login_form.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 
 class AddItemPage extends StatefulWidget {
