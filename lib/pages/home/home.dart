@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/constants/variables.dart';
-import 'package:password_manager/pages/addItem/add_item.dart';
 import 'package:password_manager/pages/home/services/item_stream.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,20 +15,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        floatingActionButton: buildFloatingActionButton(context),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        appBar: buildAppBar(context),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: ItemsStream(searchString: searchString),
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ItemsStream(searchString: searchString),
+            ),
+          ],
         ),
       ),
     );
@@ -44,6 +38,9 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             setState(() {
               isSearching = !isSearching;
+              setState(() {
+                searchString = null;
+              });
             });
           },
           icon: isSearching ? Icon(Icons.cancel_outlined) : Icon(Icons.search),
@@ -86,22 +83,6 @@ class _HomePageState extends State<HomePage> {
           filled: true,
           fillColor: Theme.of(context).bottomAppBarColor,
         ),
-      ),
-    );
-  }
-
-  Padding buildFloatingActionButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(kDefaultPadding * 0.4),
-      child: FloatingActionButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            10.0,
-          ),
-        ),
-        tooltip: 'Add New Item',
-        child: Icon(Icons.add),
-        onPressed: () => Navigator.of(context).pushNamed(AddItemPage.routeName),
       ),
     );
   }

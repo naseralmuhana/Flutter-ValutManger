@@ -21,29 +21,26 @@ class _SlidableWidgetState extends State<SlidableWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        child: widget.child,
-        secondaryActions: [
-          buildCustomIconSliderAction(
-            color: Colors.black87,
-            label: 'Delete',
-            icon: Icons.delete,
-            onTap: () => buildDeleteAlert(context, itemName: widget.item['name']).show(),
+    return Slidable(
+      actionPane: SlidableDrawerActionPane(),
+      child: widget.child,
+      secondaryActions: [
+        buildCustomIconSliderAction(
+          color: Colors.black87,
+          label: 'Delete',
+          icon: Icons.delete,
+          onTap: () => buildDeleteAlert(context, itemName: widget.item['name']).show(),
+        ),
+        buildCustomIconSliderAction(
+          color: kPrimaryColor,
+          label: 'Edit',
+          icon: Icons.edit,
+          onTap: () => Navigator.of(context).pushNamed(
+            EditItemPage.routeName,
+            arguments: widget.item,
           ),
-          buildCustomIconSliderAction(
-            color: kPrimaryColor,
-            label: 'Edit',
-            icon: Icons.edit,
-            onTap: () => Navigator.of(context).pushNamed(
-              EditItemPage.routeName,
-              arguments: widget.item,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

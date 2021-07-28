@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:password_manager/pages/home/home.dart';
+import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinCodeAuthPage extends StatefulWidget {
@@ -122,7 +122,7 @@ class _PinCodeAuthPageState extends State<PinCodeAuthPage> {
       onChanged: (value) {},
       onCompleted: (value) {
         if (value == _requiredNumber) {
-          Navigator.pushReplacementNamed(context, HomePage.routeName);
+          Navigator.pushReplacementNamed(context, BottomBarWidget.routeName);
         } else {
           _errorController.add(ErrorAnimationType.shake);
           setState(

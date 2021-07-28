@@ -27,9 +27,7 @@ class ItemsStream extends StatelessWidget {
                           child: ItemCard(item: item),
                           item: item,
                         ),
-                        onTap: () {
-                          customBottomSheet(context, item);
-                        },
+                        onTap: () => customBottomSheet(context, item),
                       );
                     },
                   ).toList(),

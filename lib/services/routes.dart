@@ -5,8 +5,10 @@ import 'package:password_manager/pages/authenticate/pin_code_auth.dart';
 import 'package:password_manager/pages/authenticate/sms_autofill_auth.dart';
 import 'package:password_manager/pages/editItem/edit_item.dart';
 import 'package:password_manager/pages/home/home.dart';
+import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
+  BottomBarWidget.routeName: (context) => BottomBarWidget(),
   HomePage.routeName: (context) => HomePage(),
   AddItemPage.routeName: (context) => AddItemPage(),
   EditItemPage.routeName: (context) => EditItemPage(),
