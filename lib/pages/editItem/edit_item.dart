@@ -23,7 +23,6 @@ class _EditItemPageState extends State<EditItemPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   bool obscureText = true;
-  String passwordButtonLabal = 'Show Password';
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _urlController;
   late TextEditingController _nameController;
@@ -227,18 +226,6 @@ class _EditItemPageState extends State<EditItemPage> {
     );
   }
 
-  IconButton buildPasswordVisibility() {
-    return IconButton(
-      icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off),
-      splashRadius: 20.0,
-      onPressed: () {
-        setState(() {
-          obscureText = !obscureText;
-        });
-      },
-    );
-  }
-
   Column buildColumnClipboard({controller}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -264,7 +251,16 @@ class _EditItemPageState extends State<EditItemPage> {
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
-        obscureTextField != null ? buildPasswordVisibility() : Container(),
+        obscureTextField != null
+            ? CustomClipBoard.buildPasswordVisibility(
+                obscureText: obscureText,
+                onPressed: () {
+                  setState(() {
+                    obscureText = !obscureText;
+                  });
+                },
+              )
+            : Container(),
         CustomClipBoard.buildPasteClipboard(onPressedState: (val) {
           setState(() {
             controller.text += val;

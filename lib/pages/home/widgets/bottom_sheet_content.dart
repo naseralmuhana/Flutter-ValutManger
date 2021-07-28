@@ -57,7 +57,14 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildPasswordVisibility(),
+          CustomClipBoard.buildPasswordVisibility(
+            obscureText: obscurePassword,
+            onPressed: () {
+              setState(() {
+                obscurePassword = !obscurePassword;
+              });
+            },
+          ),
           CustomClipBoard.buildCopyClipboard(
             value: _decryptedPassword,
           ),
@@ -85,18 +92,6 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
         ),
       ),
       trailing: CustomClipBoard.buildCopyClipboard(value: content),
-    );
-  }
-
-  IconButton buildPasswordVisibility() {
-    return IconButton(
-      icon: Icon(obscurePassword ? Icons.visibility : Icons.visibility_off),
-      splashRadius: 20.0,
-      onPressed: () {
-        setState(() {
-          obscurePassword = !obscurePassword;
-        });
-      },
     );
   }
 

@@ -48,4 +48,12 @@ class CustomClipBoard {
       onPressed: onPressed,
     );
   }
+
+  static IconButton buildPasswordVisibility({obscureText, onPressed}) {
+    return IconButton(
+      icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off),
+      splashRadius: 20.0,
+      onPressed: onPressed,
+    );
+  }
 }
