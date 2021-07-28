@@ -1,4 +1,3 @@
-import 'package:clipboard/clipboard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +6,7 @@ import 'package:password_manager/constants/variables.dart';
 import 'package:password_manager/services/validation.dart';
 import 'package:password_manager/pages/home/home.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
+import 'package:password_manager/widgets/clipBoard/clip_board.dart';
 
 import 'package:password_manager/widgets/custom_elevated_button.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
@@ -239,54 +239,22 @@ class _EditItemPageState extends State<EditItemPage> {
     );
   }
 
-  IconButton buildClearTextField({controller}) {
-    return IconButton(
-      tooltip: 'Clear',
-      icon: Icon(Icons.clear),
-      splashRadius: 20.0,
-      onPressed: () {
-        setState(() {
-          controller.clear();
-        });
-      },
-    );
-  }
-
-  IconButton buildPasteClipboard({controller}) {
-    return IconButton(
-      tooltip: 'Paste',
-      icon: Icon(Icons.paste),
-      splashRadius: 20.0,
-      onPressed: () async {
-        final value = await FlutterClipboard.paste();
-        setState(() {
-          controller.text += value;
-        });
-        CustomToast.showToast(message: 'Paste Sucessfully');
-      },
-    );
-  }
-
-  IconButton buildCopyClipboard({controller}) {
-    return IconButton(
-      tooltip: 'Copy',
-      icon: Icon(Icons.content_copy_rounded),
-      splashRadius: 20.0,
-      onPressed: () async {
-        await FlutterClipboard.copy(controller.text);
-        CustomToast.showToast(message: 'Copy to clipboard');
-      },
-    );
-  }
-
   Column buildColumnClipboard({controller}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
-        buildPasteClipboard(controller: controller),
-        buildCopyClipboard(controller: controller),
-        buildClearTextField(controller: controller),
+        CustomClipBoard.buildPasteClipboard(onPressedState: (val) {
+          setState(() {
+            controller.text += val;
+          });
+        }),
+        CustomClipBoard.buildControllerCopyClipboard(controller: controller),
+        CustomClipBoard.buildClearTextField(onPressed: () {
+          setState(() {
+            controller.clear();
+          });
+        }),
       ],
     );
   }
@@ -297,9 +265,17 @@ class _EditItemPageState extends State<EditItemPage> {
       mainAxisSize: MainAxisSize.min,
       children: [
         obscureTextField != null ? buildPasswordVisibility() : Container(),
-        buildPasteClipboard(controller: controller),
-        buildCopyClipboard(controller: controller),
-        buildClearTextField(controller: controller),
+        CustomClipBoard.buildPasteClipboard(onPressedState: (val) {
+          setState(() {
+            controller.text += val;
+          });
+        }),
+        CustomClipBoard.buildControllerCopyClipboard(controller: controller),
+        CustomClipBoard.buildClearTextField(onPressed: () {
+          setState(() {
+            controller.clear();
+          });
+        }),
       ],
     );
   }

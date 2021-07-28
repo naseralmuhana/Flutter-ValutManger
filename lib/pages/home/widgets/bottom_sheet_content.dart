@@ -1,8 +1,7 @@
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:password_manager/pages/editItem/edit_item.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
-import 'package:password_manager/widgets/toast/toast.dart';
+import 'package:password_manager/widgets/clipBoard/clip_board.dart';
 
 class BottomSheetCentent extends StatefulWidget {
   final item;
@@ -59,7 +58,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
         mainAxisSize: MainAxisSize.min,
         children: [
           buildPasswordVisibility(),
-          buildCopyClipboard(
+          CustomClipBoard.buildCopyClipboard(
             value: _decryptedPassword,
           ),
         ],
@@ -85,7 +84,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
           fontSize: 16,
         ),
       ),
-      trailing: buildCopyClipboard(value: content),
+      trailing: CustomClipBoard.buildCopyClipboard(value: content),
     );
   }
 
@@ -114,18 +113,6 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
           arguments: item,
         ),
       ),
-    );
-  }
-
-  IconButton buildCopyClipboard({required String value}) {
-    return IconButton(
-      tooltip: 'Copy',
-      icon: Icon(Icons.content_copy_rounded),
-      splashRadius: 20.0,
-      onPressed: () async {
-        await FlutterClipboard.copy(value);
-        CustomToast.showToast(message: 'Copy to clipboard');
-      },
     );
   }
 
