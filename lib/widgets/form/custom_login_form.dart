@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/services/validation.dart';
-import 'package:password_manager/widgets/form/custom_elevated_button.dart';
-import 'package:password_manager/widgets/form/custom_text_form_field.dart';
+import 'package:password_manager/widgets/form/components/custom_elevated_button.dart';
+import 'package:password_manager/widgets/form/components/custom_text_form_field.dart';
 
 Validation _validation = Validation();
 
-class CustomForm extends StatelessWidget {
+class CustomLoginForm extends StatelessWidget {
   final TextEditingController urlController;
   final TextEditingController nameController;
   final TextEditingController usernameController;
@@ -15,7 +15,7 @@ class CustomForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final VoidCallback onPressed;
 
-  const CustomForm(
+  const CustomLoginForm(
       {Key? key,
       required this.urlController,
       required this.nameController,
@@ -45,7 +45,7 @@ class CustomForm extends StatelessWidget {
             /// Name
             CustomTextFormField(
               controller: nameController,
-              label: 'Name',
+              label: 'Name *',
               validator: _validation.isEmptyValidation,
               textInputType: TextInputType.name,
               autofillHints: [AutofillHints.url],
@@ -73,7 +73,7 @@ class CustomForm extends StatelessWidget {
             /// Password
             CustomTextFormField(
               controller: passwordController,
-              label: 'Password',
+              label: 'Password *',
               validator: _validation.isEmptyValidation,
               obscureText: true,
               autofillHints: [AutofillHints.password],

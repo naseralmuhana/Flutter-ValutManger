@@ -7,6 +7,7 @@ class CustomClipBoard {
     return IconButton(
       tooltip: 'Copy',
       icon: Icon(Icons.content_copy_rounded),
+      color: Color(0xb3ffffff),
       splashRadius: 20.0,
       onPressed: () async {
         await FlutterClipboard.copy(value);
@@ -19,6 +20,7 @@ class CustomClipBoard {
     return IconButton(
       tooltip: 'Copy',
       icon: Icon(Icons.content_copy_rounded),
+      color: Color(0xb3ffffff),
       splashRadius: 20.0,
       onPressed: () async {
         await FlutterClipboard.copy(controller.text);
@@ -31,6 +33,7 @@ class CustomClipBoard {
     return IconButton(
       tooltip: 'Paste',
       icon: Icon(Icons.paste),
+      color: Color(0xb3ffffff),
       splashRadius: 20.0,
       onPressed: () async {
         final value = await FlutterClipboard.paste();
@@ -44,6 +47,7 @@ class CustomClipBoard {
     return IconButton(
       tooltip: 'Clear',
       icon: Icon(Icons.clear),
+      color: Color(0xb3ffffff),
       splashRadius: 20.0,
       onPressed: onPressed,
     );
@@ -53,6 +57,7 @@ class CustomClipBoard {
     return IconButton(
       icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off),
       splashRadius: 20.0,
+      color: Color(0xb3ffffff),
       onPressed: onPressed,
     );
   }

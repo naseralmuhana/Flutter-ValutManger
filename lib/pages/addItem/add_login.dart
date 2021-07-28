@@ -7,14 +7,14 @@ import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
 import 'package:password_manager/widgets/form/custom_login_form.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 
-class AddItemPage extends StatefulWidget {
-  static final String routeName = 'AddItemPageRoute';
+class AddLoginPage extends StatefulWidget {
+  static final String routeName = 'AddLoginPageRoute';
 
   @override
-  _AddItemPageState createState() => _AddItemPageState();
+  _AddLoginPageState createState() => _AddLoginPageState();
 }
 
-class _AddItemPageState extends State<AddItemPage> {
+class _AddLoginPageState extends State<AddLoginPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final _formKey = GlobalKey<FormState>();
@@ -53,27 +53,21 @@ class _AddItemPageState extends State<AddItemPage> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('Add New Item'),
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              vertical: kDefaultPadding * 1.5,
-              horizontal: kDefaultPadding * 0.5,
-            ),
-            child: CustomForm(
-              formKey: _formKey,
-              urlController: _urlController,
-              nameController: _nameController,
-              usernameController: _usernameController,
-              emailController: _emailController,
-              passwordController: _passwordController,
-              noteController: _noteController,
-              onPressed: _trySubmitForm,
-            ),
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: kDefaultPadding * 1.5,
+            horizontal: kDefaultPadding * 0.5,
+          ),
+          child: CustomLoginForm(
+            formKey: _formKey,
+            urlController: _urlController,
+            nameController: _nameController,
+            usernameController: _usernameController,
+            emailController: _emailController,
+            passwordController: _passwordController,
+            noteController: _noteController,
+            onPressed: _trySubmitForm,
           ),
         ),
       ),
@@ -86,7 +80,7 @@ class _AddItemPageState extends State<AddItemPage> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       try {
-        await _firestore.collection('items').add({
+        await _firestore.collection('LoginItems').add({
           'url': _urlController.text,
           'name': _nameController.text,
           'username': _usernameController.text,

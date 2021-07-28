@@ -75,7 +75,7 @@ class _EditItemPageState extends State<EditItemPage> {
             vertical: kDefaultPadding * 1.5,
             horizontal: kDefaultPadding * 0.5,
           ),
-          child: CustomForm(
+          child: CustomLoginForm(
             formKey: _formKey,
             urlController: _urlController,
             nameController: _nameController,
@@ -96,7 +96,7 @@ class _EditItemPageState extends State<EditItemPage> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       try {
-        await _firestore.collection('items').doc(item.id).update({
+        await _firestore.collection('LoginItems').doc(item.id).update({
           'url': _urlController.text,
           'name': _nameController.text,
           'username': _usernameController.text,
