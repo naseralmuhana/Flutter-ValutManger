@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:password_manager/constants/variables.dart';
-import 'package:password_manager/pages/editItem/edit_item.dart';
+import 'package:password_manager/pages/editItem/edit_login.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 

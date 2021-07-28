@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:password_manager/pages/editItem/edit_item.dart';
+import 'package:password_manager/pages/editItem/edit_login.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
 import 'package:password_manager/widgets/clipBoard/clip_board.dart';
 

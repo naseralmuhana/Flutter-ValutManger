@@ -2,13 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:password_manager/constants/variables.dart';
-
-import 'package:password_manager/services/validation.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
 import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
-
-import 'package:password_manager/widgets/custom_elevated_button.dart';
-import 'package:password_manager/widgets/custom_text_form_field.dart';
+import 'package:password_manager/widgets/form/custom_form.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 
 class EditItemPage extends StatefulWidget {
@@ -19,7 +15,6 @@ class EditItemPage extends StatefulWidget {
 }
 
 class _EditItemPageState extends State<EditItemPage> {
-  Validation _validation = Validation();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final _formKey = GlobalKey<FormState>();
@@ -80,76 +75,15 @@ class _EditItemPageState extends State<EditItemPage> {
             vertical: kDefaultPadding * 1.5,
             horizontal: kDefaultPadding * 0.5,
           ),
-          child: Form(
-            key: _formKey,
-            child: AutofillGroup(
-              child: Column(
-                children: [
-                  /// Url
-                  CustomTextFormField(
-                    controller: _urlController,
-                    label: 'Url',
-                    textInputType: TextInputType.url,
-                    autofillHints: [AutofillHints.url],
-                  ),
-                  SizedBox(height: 15.0),
-
-                  /// Name
-                  CustomTextFormField(
-                    controller: _nameController,
-                    label: 'Name',
-                    validator: _validation.isEmptyValidation,
-                    textInputType: TextInputType.name,
-                    autofillHints: [AutofillHints.url],
-                  ),
-                  SizedBox(height: 15.0),
-
-                  /// Username
-                  CustomTextFormField(
-                    controller: _usernameController,
-                    label: 'Username',
-                    autofillHints: [AutofillHints.name],
-                  ),
-                  SizedBox(height: 15.0),
-
-                  /// Email
-                  CustomTextFormField(
-                    controller: _emailController,
-                    label: 'Email',
-                    validator: _validation.emailValidator,
-                    autofillHints: [AutofillHints.email],
-                    textInputType: TextInputType.emailAddress,
-                  ),
-                  SizedBox(height: 15.0),
-
-                  /// Password
-                  CustomTextFormField(
-                    controller: _passwordController,
-                    label: 'Password',
-                    validator: _validation.isEmptyValidation,
-                    obscureText: true,
-                    autofillHints: [AutofillHints.password],
-                    textInputType: TextInputType.visiblePassword,
-                  ),
-                  SizedBox(height: 15.0),
-
-                  /// Note
-                  CustomTextFormField(
-                    controller: _noteController,
-                    label: 'Note',
-                    maxLines: 6,
-                    textInputType: TextInputType.multiline,
-                  ),
-                  SizedBox(height: 15.0),
-
-                  /// add item button
-                  CustomElevatedButton(
-                    buttonLabel: 'Save',
-                    onPressed: _trySubmitForm,
-                  ),
-                ],
-              ),
-            ),
+          child: CustomForm(
+            formKey: _formKey,
+            urlController: _urlController,
+            nameController: _nameController,
+            usernameController: _usernameController,
+            emailController: _emailController,
+            passwordController: _passwordController,
+            noteController: _noteController,
+            onPressed: _trySubmitForm,
           ),
         ),
       ),

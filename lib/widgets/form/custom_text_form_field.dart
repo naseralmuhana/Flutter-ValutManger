@@ -92,7 +92,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       children: [
         obscureTextField != null
             ? CustomClipBoard.buildPasswordVisibility(
-                obscureText: widget.obscureText,
+                obscureText: obscurePassword,
                 onPressed: () {
                   setState(() {
                     obscurePassword = !obscurePassword!;
