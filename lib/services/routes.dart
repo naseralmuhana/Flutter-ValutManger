@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:password_manager/pages/addItem/add_item.dart';
+import 'package:password_manager/pages/addItem/add_login.dart';
 import 'package:password_manager/pages/authenticate/finger_print_auth.dart';
 import 'package:password_manager/pages/authenticate/pin_code_auth.dart';
 import 'package:password_manager/pages/authenticate/sms_autofill_auth.dart';
-import 'package:password_manager/pages/editItem/edit_item.dart';
+import 'package:password_manager/pages/editItem/edit_login.dart';
 import 'package:password_manager/pages/home/home.dart';
 import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
 

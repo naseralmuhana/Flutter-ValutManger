@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:password_manager/constants/variables.dart';
-import 'package:password_manager/pages/editItem/edit_item.dart';
+import 'package:password_manager/pages/editItem/edit_login.dart';
+import 'package:password_manager/widgets/toast/toast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SlidableWidget extends StatefulWidget {
@@ -74,7 +74,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
           label: 'Yes, delete it!',
           onPressed: () {
             deleteItem(id: widget.item.id);
-            showToast(message: '${widget.item['name']} has been Deleted Successfully.');
+            CustomToast.showToast(message: '${widget.item['name']} has been Deleted Successfully.');
             Navigator.pop(context);
           },
         ),
@@ -95,13 +95,6 @@ class _SlidableWidgetState extends State<SlidableWidget> {
       ),
       onPressed: onPressed,
       color: buttonColor,
-    );
-  }
-
-  void showToast({required String message}) {
-    Fluttertoast.showToast(
-      msg: message,
-      fontSize: 16.0,
     );
   }
 

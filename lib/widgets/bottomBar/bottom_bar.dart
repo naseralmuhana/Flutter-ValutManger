@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/constants/variables.dart';
-import 'package:password_manager/pages/addItem/add_item.dart';
+import 'package:password_manager/pages/addItem/add_login.dart';
 import 'package:password_manager/pages/home/home.dart';
 import 'package:password_manager/widgets/bottomBar/components/custom_floating_action_button.dart';
 

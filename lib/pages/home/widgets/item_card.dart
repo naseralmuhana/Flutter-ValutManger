@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:password_manager/widgets/toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:password_manager/constants/variables.dart';
@@ -45,18 +45,11 @@ class ItemCard extends StatelessWidget {
 
   Future _launchUrl({String? url}) async {
     if (url!.isEmpty) {
-      showToast(message: 'There is no Url.');
+      CustomToast.showToast(message: 'There is no Url.');
     } else if (await canLaunch('http://$url')) {
       await launch('http://$url');
     } else {
-      showToast(message: 'Could not launch http://$url');
+      CustomToast.showToast(message: 'Could not launch http://$url');
     }
-  }
-
-  void showToast({required String message}) {
-    Fluttertoast.showToast(
-      msg: message,
-      fontSize: 16.0,
-    );
   }
 }

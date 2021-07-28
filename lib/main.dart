@@ -4,6 +4,7 @@ import 'package:password_manager/pages/authenticate/finger_print_auth.dart';
 
 import 'package:password_manager/services/routes.dart';
 import 'package:password_manager/services/themes.dart';
+import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: darkThemeData,
-      initialRoute: FingerPrintAuthPage.routeName,
+      initialRoute: BottomBarWidget.routeName,
       routes: routes,
     );
   }

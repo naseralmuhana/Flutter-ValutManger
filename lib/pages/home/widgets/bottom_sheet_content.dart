@@ -1,8 +1,7 @@
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:password_manager/pages/editItem/edit_item.dart';
+import 'package:password_manager/pages/editItem/edit_login.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
+import 'package:password_manager/widgets/clipBoard/clip_board.dart';
 
 class BottomSheetCentent extends StatefulWidget {
   final item;
@@ -58,19 +57,19 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildPasswordVisibility(),
-          buildCopyClipboard(
+          CustomClipBoard.buildPasswordVisibility(
+            obscureText: obscurePassword,
+            onPressed: () {
+              setState(() {
+                obscurePassword = !obscurePassword;
+              });
+            },
+          ),
+          CustomClipBoard.buildCopyClipboard(
             value: _decryptedPassword,
           ),
         ],
       ),
-    );
-  }
-
-  void showToast({required String message}) {
-    Fluttertoast.showToast(
-      msg: message,
-      fontSize: 16.0,
     );
   }
 
@@ -92,19 +91,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
           fontSize: 16,
         ),
       ),
-      trailing: buildCopyClipboard(value: content),
-    );
-  }
-
-  IconButton buildPasswordVisibility() {
-    return IconButton(
-      icon: Icon(obscurePassword ? Icons.visibility : Icons.visibility_off),
-      splashRadius: 20.0,
-      onPressed: () {
-        setState(() {
-          obscurePassword = !obscurePassword;
-        });
-      },
+      trailing: CustomClipBoard.buildCopyClipboard(value: content),
     );
   }
 
@@ -121,18 +108,6 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
           arguments: item,
         ),
       ),
-    );
-  }
-
-  IconButton buildCopyClipboard({required String value}) {
-    return IconButton(
-      tooltip: 'Copy',
-      icon: Icon(Icons.content_copy_rounded),
-      splashRadius: 20.0,
-      onPressed: () async {
-        await FlutterClipboard.copy(value);
-        showToast(message: 'Copy to clipboard');
-      },
     );
   }
 
