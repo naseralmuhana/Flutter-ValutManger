@@ -36,7 +36,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
           label: 'Edit',
           icon: Icons.edit,
           onTap: () => Navigator.of(context).pushNamed(
-            EditItemPage.routeName,
+            EditLoginPage.routeName,
             arguments: widget.item,
           ),
         ),

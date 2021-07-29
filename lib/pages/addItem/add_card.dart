@@ -12,19 +12,6 @@ import 'package:password_manager/widgets/form/components/custom_elevated_button.
 
 import 'package:password_manager/widgets/toast/toast.dart';
 
-final OutlineInputBorder outlineInputBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(25.0),
-  borderSide: BorderSide(),
-);
-final OutlineInputBorder outlineInputEnabledBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(25.0),
-  borderSide: BorderSide(
-    color: Color(0x99ffffff),
-    width: 0.5,
-  ),
-);
-const decorationlabelStyle = TextStyle(color: Colors.grey);
-
 class AddCardPage extends StatefulWidget {
   static final String routeName = 'AddCardPageRoute';
 
@@ -210,13 +197,13 @@ class _AddCardPageState extends State<AddCardPage> {
     required String value,
   }) {
     return InputDecoration(
-      border: outlineInputBorder,
+      border: fOutlineInputBorder,
       suffixIcon: CustomClipBoard.buildCopyClipboard(value: value),
-      enabledBorder: outlineInputEnabledBorder,
+      enabledBorder: fOutlineInputEnabledBorder,
       labelText: labelText,
-      labelStyle: decorationlabelStyle,
+      labelStyle: kDecorationlabelStyle,
       hintText: hintText ?? null,
-      hintStyle: decorationlabelStyle,
+      hintStyle: kDecorationlabelStyle,
     );
   }
 }

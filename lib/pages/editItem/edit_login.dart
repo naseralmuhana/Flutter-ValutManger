@@ -7,14 +7,14 @@ import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
 import 'package:password_manager/widgets/form/custom_login_form.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 
-class EditItemPage extends StatefulWidget {
-  static final String routeName = 'EditItemPageRoute';
+class EditLoginPage extends StatefulWidget {
+  static final String routeName = 'EditLoginPageRoute';
 
   @override
-  _EditItemPageState createState() => _EditItemPageState();
+  _EditLoginPageState createState() => _EditLoginPageState();
 }
 
-class _EditItemPageState extends State<EditItemPage> {
+class _EditLoginPageState extends State<EditLoginPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final _formKey = GlobalKey<FormState>();

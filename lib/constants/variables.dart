@@ -10,3 +10,16 @@ const ShapeBorder kBottomSheetShape = RoundedRectangleBorder(
     topRight: Radius.circular(30),
   ),
 );
+
+final OutlineInputBorder fOutlineInputBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(25.0),
+  borderSide: BorderSide(),
+);
+final OutlineInputBorder fOutlineInputEnabledBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(25.0),
+  borderSide: BorderSide(
+    color: Color(0x99ffffff),
+    width: 0.5,
+  ),
+);
+const kDecorationlabelStyle = TextStyle(color: Colors.grey);
