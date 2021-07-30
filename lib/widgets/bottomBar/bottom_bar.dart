@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/constants/variables.dart';
-import 'package:password_manager/pages/home/home.dart';
+
+import 'package:password_manager/pages/items/items.dart';
+
 import 'package:password_manager/widgets/bottomBar/components/custom_floating_action_button.dart';
-import 'package:password_manager/widgets/taskAppBar/task_app_bar.dart';
+import 'package:password_manager/widgets/tabAppBar/tab_app_bar.dart';
 
 class BottomBarWidget extends StatefulWidget {
   static final String routeName = 'BottomBarWidgetRoute';
@@ -15,14 +17,14 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
   late List<Map<String, dynamic>> _pages;
   List<BottomNavigationBarItem> bottomNavigationBarItems = [
     BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Home',
-      tooltip: 'Home',
+      icon: Icon(Icons.login_outlined),
+      label: 'Logins',
+      tooltip: 'Logins',
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.rss_feed),
-      label: 'Feed',
-      tooltip: 'Feed',
+      icon: Icon(Icons.credit_card_outlined),
+      label: 'Cards',
+      tooltip: 'Cards',
     ),
     BottomNavigationBarItem(
       icon: Icon(null),
@@ -43,11 +45,11 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
   @override
   void initState() {
     _pages = [
-      {'page': HomePage(), 'title': 'Home'},
-      {'page': HomePage(), 'title': 'Home'},
-      {'page': HomePage(), 'title': 'Home'},
-      {'page': HomePage(), 'title': 'Home'},
-      {'page': HomePage(), 'title': 'Home'},
+      {'page': ItemsPage(itemsType: 'Logins'), 'title': 'Home'},
+      {'page': ItemsPage(itemsType: 'Cards'), 'title': 'Home'},
+      {'page': ItemsPage(), 'title': 'Home'},
+      {'page': ItemsPage(), 'title': 'Home'},
+      {'page': ItemsPage(), 'title': 'Home'},
     ];
     super.initState();
   }
