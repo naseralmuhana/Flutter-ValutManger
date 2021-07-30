@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:password_manager/widgets/form/components/custom_credit_card_widget.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -58,7 +59,17 @@ class _ItemCardState extends State<ItemCard> {
     }
     return buildLoginButton(
       iconData: Icons.credit_card,
-      onPressed: () => null,
+      onPressed: () => showDialog(
+        context: context,
+        builder: (context) {
+          return CustomCreditCardWidget(
+            cardNumber: widget.item['cardNumber'],
+            cardHolderName: widget.item['cardHolderName'],
+            cvvNumber: widget.item['cvvNumber'],
+            expiryDate: widget.item['expiryDate'],
+          );
+        },
+      ),
     );
   }
 

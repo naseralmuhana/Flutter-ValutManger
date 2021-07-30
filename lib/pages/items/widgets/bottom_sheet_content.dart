@@ -154,7 +154,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
       String _obscureCardNumber = '●' * _decryptedCardNumber.length;
       String _decryptedCVVNumber = MyEncryptionDecryption.decrypt64Fernet(widget.item['cvvNumber']);
       String _obscureCVVNumber = '●' * _decryptedCVVNumber.length;
-      String _decryptedExpiryDate = MyEncryptionDecryption.decrypt64Fernet(widget.item['expiryData']);
+      String _decryptedExpiryDate = MyEncryptionDecryption.decrypt64Fernet(widget.item['expiryDate']);
 
       return [
         buildBottomSheetCloseEditIcon(context, widget.item),
