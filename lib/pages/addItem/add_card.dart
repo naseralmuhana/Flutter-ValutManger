@@ -117,7 +117,7 @@ class _AddCardPageState extends State<AddCardPage> {
       try {
         await _firestore.collection('CardItems').add({
           'cardNumber': MyEncryptionDecryption.encryptFernet(_cardNumber).base64,
-          'expiryData': MyEncryptionDecryption.encryptFernet(_expiryDate).base64,
+          'expiryDate': MyEncryptionDecryption.encryptFernet(_expiryDate).base64,
           'cvvNumber': MyEncryptionDecryption.encryptFernet(_cvvNumber).base64,
           'cardHolderName': _cardHolderName,
           'bankName': _bankName.text,
