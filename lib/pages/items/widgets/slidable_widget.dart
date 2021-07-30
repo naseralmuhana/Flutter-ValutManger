@@ -2,15 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:password_manager/constants/variables.dart';
+import 'package:password_manager/pages/addItem/add_card.dart';
 import 'package:password_manager/pages/editItem/edit_login.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SlidableWidget extends StatefulWidget {
   final Widget child;
+  final String itemType;
   final item;
 
-  SlidableWidget({Key? key, required this.child, this.item}) : super(key: key);
+  SlidableWidget({
+    Key? key,
+    required this.child,
+    this.item,
+    required this.itemType,
+  }) : super(key: key);
 
   @override
   _SlidableWidgetState createState() => _SlidableWidgetState();
@@ -18,9 +25,25 @@ class SlidableWidget extends StatefulWidget {
 
 class _SlidableWidgetState extends State<SlidableWidget> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String? collectionName;
+  String? mainField;
+  String? routeName;
+
+  void fillInfo() {
+    if (widget.itemType == 'Cards') {
+      mainField = 'bankName';
+      collectionName = 'CardItems';
+      routeName = AddCardPage.routeName;
+    } else if (widget.itemType == 'Logins') {
+      mainField = 'name';
+      collectionName = 'LoginItems';
+      routeName = EditLoginPage.routeName;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    fillInfo();
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       child: widget.child,
@@ -29,14 +52,14 @@ class _SlidableWidgetState extends State<SlidableWidget> {
           color: Colors.black87,
           label: 'Delete',
           icon: Icons.delete,
-          onTap: () => buildDeleteAlert(context, itemName: widget.item['name']).show(),
+          onTap: () => buildDeleteAlert(context, itemName: widget.item[mainField!]).show(),
         ),
         buildCustomIconSliderAction(
           color: kPrimaryColor,
           label: 'Edit',
           icon: Icons.edit,
           onTap: () => Navigator.of(context).pushNamed(
-            EditLoginPage.routeName,
+            routeName!,
             arguments: widget.item,
           ),
         ),
@@ -74,7 +97,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
           label: 'Yes, delete it!',
           onPressed: () {
             deleteItem(id: widget.item.id);
-            CustomToast.showToast(message: '${widget.item['name']} has been Deleted Successfully.');
+            CustomToast.showToast(message: '${widget.item[mainField!]} has been Deleted Successfully.');
             Navigator.pop(context);
           },
         ),
@@ -100,7 +123,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
 
   Future<void> deleteItem({required String id}) async {
     try {
-      await _firestore.collection('LoginItems').doc(id).delete();
+      await _firestore.collection(collectionName!).doc(id).delete();
     } catch (e) {}
   }
 

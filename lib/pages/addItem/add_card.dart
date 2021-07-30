@@ -26,10 +26,7 @@ class _AddCardPageState extends State<AddCardPage> {
   String? _expiryDate = '';
   bool showBackView = false;
   late TextEditingController _bankName;
-  late TextEditingController _usernameController;
-  late TextEditingController _emailController;
   late TextEditingController _passwordController;
-  late TextEditingController _atmPasswordController;
   late TextEditingController _noteController;
   GlobalKey<FormState> _creditCardFormKey = GlobalKey<FormState>();
 
@@ -39,10 +36,8 @@ class _AddCardPageState extends State<AddCardPage> {
   @override
   void initState() {
     _bankName = TextEditingController();
-    _usernameController = TextEditingController();
-    _emailController = TextEditingController();
+
     _passwordController = TextEditingController();
-    _atmPasswordController = TextEditingController();
     _noteController = TextEditingController();
     super.initState();
   }
@@ -50,10 +45,8 @@ class _AddCardPageState extends State<AddCardPage> {
   @override
   void dispose() {
     _bankName.dispose();
-    _usernameController.dispose();
-    _emailController.dispose();
+
     _passwordController.dispose();
-    _atmPasswordController.dispose();
     _noteController.dispose();
     super.dispose();
   }
@@ -96,11 +89,8 @@ class _AddCardPageState extends State<AddCardPage> {
               CustomCardForm(
                 extraFormKey: _extraFormKey,
                 bankName: _bankName,
-                usernameController: _usernameController,
-                emailController: _emailController,
-                passwordController: _passwordController,
                 noteController: _noteController,
-                atmPasswordController: _atmPasswordController,
+                passwordController: _passwordController,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -131,20 +121,14 @@ class _AddCardPageState extends State<AddCardPage> {
           'cvvNumber': MyEncryptionDecryption.encryptFernet(_cvvNumber).base64,
           'cardHolderName': _cardHolderName,
           'bankName': _bankName.text,
-          'username': _usernameController.text,
-          'email': _emailController.text,
           'password': MyEncryptionDecryption.encryptFernet(_passwordController.text).base64,
-          'atmPassword': MyEncryptionDecryption.encryptFernet(_atmPasswordController.text).base64,
           'note': _noteController.text,
         }).then((value) {
           _cardNumber = null;
           _expiryDate = null;
           _cvvNumber = null;
           _cardHolderName = null;
-          _usernameController.clear();
-          _emailController.clear();
           _passwordController.clear();
-          _atmPasswordController.clear();
           _noteController.clear();
         });
         CustomToast.showToast(message: '${_bankName.text} has been Added Successfully.');

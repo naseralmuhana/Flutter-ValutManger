@@ -15,6 +15,7 @@ final OutlineInputBorder fOutlineInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.circular(25.0),
   borderSide: BorderSide(),
 );
+
 final OutlineInputBorder fOutlineInputEnabledBorder = OutlineInputBorder(
   borderRadius: BorderRadius.circular(25.0),
   borderSide: BorderSide(
@@ -22,4 +23,5 @@ final OutlineInputBorder fOutlineInputEnabledBorder = OutlineInputBorder(
     width: 0.5,
   ),
 );
+
 const kDecorationlabelStyle = TextStyle(color: Colors.grey);
