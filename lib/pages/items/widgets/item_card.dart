@@ -25,6 +25,8 @@ class _ItemCardState extends State<ItemCard> {
       mainField = 'bankName';
     } else if (widget.itemType == 'Logins') {
       mainField = 'name';
+    } else if (widget.itemType == 'Notes') {
+      mainField = 'title';
     }
   }
 
@@ -56,20 +58,25 @@ class _ItemCardState extends State<ItemCard> {
         iconData: Icons.open_in_browser,
         onPressed: () => _launchUrl(url: widget.item['url']),
       );
+    } else if (mainField == 'bankName') {
+      return buildLoginButton(
+        iconData: Icons.credit_card,
+        onPressed: () => showDialog(
+          context: context,
+          builder: (context) {
+            return CustomCreditCardWidget(
+              cardNumber: widget.item['cardNumber'],
+              cardHolderName: widget.item['cardHolderName'],
+              cvvNumber: widget.item['cvvNumber'],
+              expiryDate: widget.item['expiryDate'],
+            );
+          },
+        ),
+      );
     }
     return buildLoginButton(
-      iconData: Icons.credit_card,
-      onPressed: () => showDialog(
-        context: context,
-        builder: (context) {
-          return CustomCreditCardWidget(
-            cardNumber: widget.item['cardNumber'],
-            cardHolderName: widget.item['cardHolderName'],
-            cvvNumber: widget.item['cvvNumber'],
-            expiryDate: widget.item['expiryDate'],
-          );
-        },
-      ),
+      iconData: Icons.note_outlined,
+      onPressed: () => null,
     );
   }
 

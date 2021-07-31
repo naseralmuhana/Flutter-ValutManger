@@ -136,9 +136,9 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
   }
 
   List<Widget> itemContentList() {
-    String _decryptedPassword = MyEncryptionDecryption.decrypt64Fernet(widget.item['password']);
-    String _obscurePassword = '●' * _decryptedPassword.length;
     if (widget.itemType == 'Logins') {
+      String _decryptedPassword = MyEncryptionDecryption.decrypt64Fernet(widget.item['password']);
+      String _obscurePassword = '●' * _decryptedPassword.length;
       return [
         buildBottomSheetCloseEditIcon(context, widget.item),
         widget.item['url'].isEmpty ? Container() : buildBottomSheetListTile('Url', widget.item['url']),
@@ -149,7 +149,9 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
         widget.item['note'].isEmpty ? Container() : buildBottomSheetListTile('Note', widget.item['note']),
         SizedBox(height: 30.0)
       ];
-    } else {
+    } else if (widget.itemType == 'Cards') {
+      String _decryptedPassword = MyEncryptionDecryption.decrypt64Fernet(widget.item['password']);
+      String _obscurePassword = '●' * _decryptedPassword.length;
       String _decryptedCardNumber = MyEncryptionDecryption.decrypt64Fernet(widget.item['cardNumber']);
       String _obscureCardNumber = '●' * _decryptedCardNumber.length;
       String _decryptedCVVNumber = MyEncryptionDecryption.decrypt64Fernet(widget.item['cvvNumber']);
@@ -167,6 +169,14 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
             ? Container()
             : buildBottomSheetObscureListTile(_obscurePassword, _decryptedPassword, 'Password', checkObscurePassword),
         widget.item['note'].isEmpty ? Container() : buildBottomSheetListTile('Note', widget.item['note']),
+        SizedBox(height: 30.0)
+      ];
+    } else {
+      String _decryptedNote = MyEncryptionDecryption.decrypt64Fernet(widget.item['note']);
+      return [
+        buildBottomSheetCloseEditIcon(context, widget.item),
+        buildBottomSheetListTile('title', widget.item['title']),
+        buildBottomSheetListTile('note', _decryptedNote),
         SizedBox(height: 30.0)
       ];
     }

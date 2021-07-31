@@ -79,6 +79,10 @@ class _ItemsStreamState extends State<ItemsStream> {
       collectionName = 'LoginItems';
       orderByField = 'name';
       searchField = 'name';
+    } else if (widget.itemType == 'Notes') {
+      collectionName = 'NoteItems';
+      orderByField = 'title';
+      searchField = 'title';
     }
   }
 }

@@ -9,13 +9,17 @@ class TabAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      // length: 3,
-      length: 2,
+      length: 3,
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          appBar: buildAppBar(),
-          body: buildScaffoldBody(),
+          body: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              buildSliverAppBar(),
+            ],
+            body: buildScaffoldBody(),
+          ),
         ),
       ),
     );
@@ -26,13 +30,15 @@ class TabAppBar extends StatelessWidget {
       children: [
         AddLoginPage(),
         AddCardPage(),
-        // AddNotePage(),
+        AddNotePage(),
       ],
     );
   }
 
-  AppBar buildAppBar() {
-    return AppBar(
+  SliverAppBar buildSliverAppBar() {
+    return SliverAppBar(
+      pinned: true,
+      floating: true,
       centerTitle: true,
       title: Text('Add New Item'),
       bottom: TabBar(
@@ -40,7 +46,7 @@ class TabAppBar extends StatelessWidget {
         tabs: [
           Tab(icon: Icon(Icons.login_outlined), text: 'Login'),
           Tab(icon: Icon(Icons.credit_card_outlined), text: 'Card'),
-          // Tab(icon: Icon(Icons.note_add_outlined), text: 'Note'),
+          Tab(icon: Icon(Icons.note_add_outlined), text: 'Note'),
         ],
       ),
     );
