@@ -32,9 +32,9 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
       tooltip: '',
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.shopping_bag),
-      label: 'Cart',
-      tooltip: 'Cart',
+      icon: Icon(Icons.note),
+      label: 'Notes',
+      tooltip: 'Notes',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.person),
@@ -45,11 +45,11 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
   @override
   void initState() {
     _pages = [
-      {'page': ItemsPage(itemsType: 'Logins'), 'title': 'Home'},
-      {'page': ItemsPage(itemsType: 'Cards'), 'title': 'Home'},
-      {'page': ItemsPage(), 'title': 'Home'},
-      {'page': ItemsPage(), 'title': 'Home'},
-      {'page': ItemsPage(), 'title': 'Home'},
+      {'page': ItemsPage(itemsType: 'Logins')},
+      {'page': ItemsPage(itemsType: 'Cards')},
+      {'page': ItemsPage(itemsType: 'Cards')},
+      {'page': ItemsPage(itemsType: 'Notes')},
+      {'page': ItemsPage(itemsType: 'Notes')},
     ];
     super.initState();
   }

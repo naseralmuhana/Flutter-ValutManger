@@ -38,6 +38,10 @@ class _SlidableWidgetState extends State<SlidableWidget> {
       mainField = 'name';
       collectionName = 'LoginItems';
       routeName = EditLoginPage.routeName;
+    } else if (widget.itemType == 'Notes') {
+      mainField = 'title';
+      collectionName = 'NoteItems';
+      routeName = EditLoginPage.routeName;
     }
   }
 
