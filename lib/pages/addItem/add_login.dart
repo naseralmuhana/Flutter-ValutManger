@@ -98,6 +98,7 @@ class _AddLoginPageState extends State<AddLoginPage> {
         Navigator.of(context).pushNamedAndRemoveUntil(
           BottomBarWidget.routeName,
           (route) => false,
+          arguments: {0},
         );
         _nameController.clear();
       } catch (e) {

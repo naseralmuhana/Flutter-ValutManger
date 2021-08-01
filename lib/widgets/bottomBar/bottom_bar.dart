@@ -15,33 +15,8 @@ class BottomBarWidget extends StatefulWidget {
 class _BottomBarWidgetState extends State<BottomBarWidget> {
   int _selectedIndex = 0;
   late List<Map<String, dynamic>> _pages;
-  List<BottomNavigationBarItem> bottomNavigationBarItems = [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.login_outlined),
-      label: 'Logins',
-      tooltip: 'Logins',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.credit_card_outlined),
-      label: 'Cards',
-      tooltip: 'Cards',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(null),
-      label: '',
-      tooltip: '',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.note),
-      label: 'Notes',
-      tooltip: 'Notes',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: 'User',
-      tooltip: 'User',
-    ),
-  ];
+  late String routeArgs;
+
   @override
   void initState() {
     _pages = [
@@ -52,6 +27,20 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
       {'page': ItemsPage(itemsType: 'Notes')},
     ];
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    routeArgs = ModalRoute.of(context)!.settings.arguments.toString();
+    try {
+      _selectedIndex = int.parse(
+        routeArgs.substring(1, 2),
+      );
+    } catch (e) {
+      _selectedIndex = 0;
+    }
+
+    super.didChangeDependencies();
   }
 
   void _selectedPage(int index) => setState(() {
@@ -82,4 +71,32 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
       ),
     );
   }
+
+  List<BottomNavigationBarItem> bottomNavigationBarItems = [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.login_outlined),
+      label: 'Logins',
+      tooltip: 'Logins',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.credit_card_outlined),
+      label: 'Cards',
+      tooltip: 'Cards',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(null),
+      label: '',
+      tooltip: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.note),
+      label: 'Notes',
+      tooltip: 'Notes',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.person),
+      label: 'User',
+      tooltip: 'User',
+    ),
+  ];
 }

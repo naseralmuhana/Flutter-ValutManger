@@ -68,6 +68,7 @@ class _AddNotePageState extends State<AddNotePage> {
         Navigator.of(context).pushNamedAndRemoveUntil(
           BottomBarWidget.routeName,
           (route) => false,
+          arguments: {3},
         );
         _titleController.clear();
       } catch (e) {

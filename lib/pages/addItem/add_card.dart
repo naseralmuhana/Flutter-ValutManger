@@ -135,6 +135,7 @@ class _AddCardPageState extends State<AddCardPage> {
         Navigator.of(context).pushNamedAndRemoveUntil(
           BottomBarWidget.routeName,
           (route) => false,
+          arguments: {1},
         );
         _bankName.clear();
       } catch (e) {
