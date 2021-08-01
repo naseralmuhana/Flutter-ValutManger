@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:password_manager/constants/variables.dart';
 import 'package:password_manager/pages/addItem/add_card.dart';
 import 'package:password_manager/pages/editItem/edit_login.dart';
+import 'package:password_manager/pages/editItem/edit_note.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -41,7 +42,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
     } else if (widget.itemType == 'Notes') {
       mainField = 'title';
       collectionName = 'NoteItems';
-      routeName = EditLoginPage.routeName;
+      routeName = EditNotePage.routeName;
     }
   }
 

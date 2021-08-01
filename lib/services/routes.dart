@@ -6,6 +6,7 @@ import 'package:password_manager/pages/authenticate/finger_print_auth.dart';
 import 'package:password_manager/pages/authenticate/pin_code_auth.dart';
 import 'package:password_manager/pages/authenticate/sms_autofill_auth.dart';
 import 'package:password_manager/pages/editItem/edit_login.dart';
+import 'package:password_manager/pages/editItem/edit_note.dart';
 import 'package:password_manager/pages/items/items.dart';
 
 import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
@@ -19,6 +20,7 @@ Map<String, Widget Function(BuildContext)> routes = {
   AddCardPage.routeName: (context) => AddCardPage(),
   AddNotePage.routeName: (context) => AddNotePage(),
   EditLoginPage.routeName: (context) => EditLoginPage(),
+  EditNotePage.routeName: (context) => EditNotePage(),
   FingerPrintAuthPage.routeName: (context) => FingerPrintAuthPage(),
   PinCodeAuthPage.routeName: (context) => PinCodeAuthPage(),
   SMSAutoFillAuthPage.routeName: (context) => SMSAutoFillAuthPage(),

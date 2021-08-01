@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:password_manager/pages/addItem/add_card.dart';
 import 'package:password_manager/pages/editItem/edit_login.dart';
+import 'package:password_manager/pages/editItem/edit_note.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
 import 'package:password_manager/widgets/clipBoard/clip_board.dart';
 
@@ -19,6 +21,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
   bool checkObscurePassword = true;
   bool checkObscureCardNumber = true;
   bool checkObscureCVVNumber = true;
+  late String routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +93,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
       leading: IconButton(
         icon: Icon(Icons.edit),
         onPressed: () => Navigator.of(context).pushNamed(
-          EditLoginPage.routeName,
+          routeName,
           arguments: item,
         ),
       ),
@@ -139,6 +142,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
     if (widget.itemType == 'Logins') {
       String _decryptedPassword = MyEncryptionDecryption.decrypt64Fernet(widget.item['password']);
       String _obscurePassword = '●' * _decryptedPassword.length;
+      routeName = EditLoginPage.routeName;
       return [
         buildBottomSheetCloseEditIcon(context, widget.item),
         widget.item['url'].isEmpty ? Container() : buildBottomSheetListTile('Url', widget.item['url']),
@@ -150,6 +154,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
         SizedBox(height: 30.0)
       ];
     } else if (widget.itemType == 'Cards') {
+      routeName = AddCardPage.routeName;
       String _decryptedPassword = MyEncryptionDecryption.decrypt64Fernet(widget.item['password']);
       String _obscurePassword = '●' * _decryptedPassword.length;
       String _decryptedCardNumber = MyEncryptionDecryption.decrypt64Fernet(widget.item['cardNumber']);
@@ -173,6 +178,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
       ];
     } else {
       String _decryptedNote = MyEncryptionDecryption.decrypt64Fernet(widget.item['note']);
+      routeName = EditNotePage.routeName;
       return [
         buildBottomSheetCloseEditIcon(context, widget.item),
         buildBottomSheetListTile('title', widget.item['title']),
