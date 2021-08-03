@@ -1,15 +1,15 @@
+import 'package:awesome_card/awesome_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_credit_card/credit_card_model.dart';
-import 'package:flutter_credit_card/credit_card_form.dart';
-import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 import 'package:password_manager/constants/variables.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
+import 'package:password_manager/services/validation.dart';
 import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
-import 'package:password_manager/widgets/clipBoard/clip_board.dart';
-import 'package:password_manager/widgets/form/custom_card_form.dart';
 import 'package:password_manager/widgets/form/components/custom_elevated_button.dart';
-
+import 'package:password_manager/widgets/form/components/custom_text_form_field.dart';
+import 'package:password_manager/widgets/gradient/gradient_container.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
 
 class AddCardPage extends StatefulWidget {
@@ -20,175 +20,256 @@ class AddCardPage extends StatefulWidget {
 }
 
 class _AddCardPageState extends State<AddCardPage> {
-  String? _cardNumber = '';
-  String? _cardHolderName = '';
-  String? _cvvNumber = '';
-  String? _expiryDate = '';
-  bool showBackView = false;
-  late TextEditingController _bankName;
-  late TextEditingController _passwordController;
-  late TextEditingController _noteController;
-  GlobalKey<FormState> _creditCardFormKey = GlobalKey<FormState>();
+  String? cardNumber = '';
+  String? cardHolderName = '';
+  String? cvvNumber = '';
+  String? expiryDate = '';
+  String? bankName;
+  bool showBackSide = false;
 
-  GlobalKey<FormState> _extraFormKey = GlobalKey<FormState>();
+  Validation _validation = Validation();
+
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController cardNumberController;
+  late TextEditingController cardHolderNameController;
+  late TextEditingController cvvNumberController;
+  late TextEditingController expiryDateController;
+  late TextEditingController bankNameController;
+  late TextEditingController titleController;
+  late TextEditingController passwordController;
+  late TextEditingController noteController;
+  late FocusNode _focusNode;
+  var cardNumberFormatter = MaskTextInputFormatter(
+    mask: '#### #### #### ####',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+  var cvvNumberFormatter = MaskTextInputFormatter(
+    mask: '###',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+  var expiryDateFormatter = MaskTextInputFormatter(
+    mask: '##/##',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
 
   @override
   void initState() {
-    _bankName = TextEditingController();
-
-    _passwordController = TextEditingController();
-    _noteController = TextEditingController();
+    cardNumberController = TextEditingController();
+    cardHolderNameController = TextEditingController();
+    cvvNumberController = TextEditingController();
+    expiryDateController = TextEditingController();
+    bankNameController = TextEditingController();
+    titleController = TextEditingController();
+    passwordController = TextEditingController();
+    noteController = TextEditingController();
+    _focusNode = FocusNode();
+    _focusNode.addListener(() {
+      setState(() {
+        _focusNode.hasFocus ? showBackSide = true : showBackSide = false;
+      });
+    });
     super.initState();
   }
 
   @override
   void dispose() {
-    _bankName.dispose();
-
-    _passwordController.dispose();
-    _noteController.dispose();
+    _focusNode.dispose();
+    cardNumberController.dispose();
+    cardHolderNameController.dispose();
+    cvvNumberController.dispose();
+    expiryDateController.dispose();
+    bankNameController.dispose();
+    titleController.dispose();
+    passwordController.dispose();
+    noteController.dispose();
     super.dispose();
-  }
-
-  void onCreditCardModelChange(CreditCardModel creditCardModel) {
-    setState(() {
-      _cardNumber = creditCardModel.cardNumber;
-      _cardHolderName = creditCardModel.cardHolderName;
-      _expiryDate = creditCardModel.expiryDate;
-      _cvvNumber = creditCardModel.cvvCode;
-      showBackView = creditCardModel.isCvvFocused;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          CreditCardWidget(
-            cardNumber: _cardNumber!,
-            expiryDate: _expiryDate!,
-            cardHolderName: _cardHolderName!,
-            cvvCode: _cvvNumber!,
-            showBackView: showBackView,
-            obscureCardCvv: true,
-            obscureCardNumber: true,
-            height: 210,
-            cardBgColor: Colors.blueAccent,
-            textStyle: TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            buildCreditCard(),
+            buildCreditCardForm(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Form buildCreditCardForm() {
+    return Form(
+      key: _formKey,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: kDefaultPadding * 1.5,
+          horizontal: kDefaultPadding * 0.5,
+        ),
+        child: Column(
+          children: <Widget>[
+            CustomTextFormField(
+              controller: cardNumberController,
+              label: 'Card Number *',
+              validator: _validation.isEmptyValidation,
+              inputFormatters: [cardNumberFormatter],
+              textInputType: TextInputType.number,
+              onChanged: (value) => setState(() => cardNumber = value),
             ),
-            animationDuration: Duration(milliseconds: 1200),
-          ),
-          Column(
-            children: [
-              buildCarditCardForm(),
-              CustomCardForm(
-                extraFormKey: _extraFormKey,
-                bankName: _bankName,
-                noteController: _noteController,
-                passwordController: _passwordController,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding * 0.5,
-                  vertical: kDefaultPadding * 0.5,
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextFormField(
+                    controller: expiryDateController,
+                    label: 'Expiry Date *',
+                    validator: _validation.isEmptyValidation,
+                    inputFormatters: [expiryDateFormatter],
+                    textInputType: TextInputType.number,
+                    onChanged: (value) => setState(() => expiryDate = value),
+                    noSuffixIcon: true,
+                  ),
                 ),
-                child: CustomElevatedButton(
-                  buttonLabel: 'Save',
-                  onPressed: _trySubmitForm,
+                SizedBox(width: 20),
+                Expanded(
+                  child: CustomTextFormField(
+                    controller: cvvNumberController,
+                    label: 'CVV *',
+                    validator: _validation.isEmptyValidation,
+                    inputFormatters: [cvvNumberFormatter],
+                    textInputType: TextInputType.number,
+                    onChanged: (value) => setState(() => cvvNumber = value),
+                    focusNode: _focusNode,
+                    noSuffixIcon: true,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+
+            SizedBox(height: 20),
+            CustomTextFormField(
+              controller: cardHolderNameController,
+              label: 'Card Holder Name *',
+              validator: _validation.isEmptyValidation,
+              onChanged: (value) => setState(() => cardHolderName = value),
+            ),
+            SizedBox(height: 20),
+            CustomTextFormField(
+              controller: bankNameController,
+              validator: _validation.isEmptyValidation,
+              label: 'Bank Name *',
+              onChanged: (value) => setState(() => bankName = value),
+            ),
+            SizedBox(height: 20),
+
+            CustomTextFormField(
+              controller: titleController,
+              validator: _validation.isEmptyValidation,
+              label: 'Title',
+            ),
+            SizedBox(height: 20),
+
+            /// Password
+            CustomTextFormField(
+              controller: passwordController,
+              label: 'Password *',
+              validator: _validation.isEmptyValidation,
+              obscureText: true,
+              autofillHints: [AutofillHints.password],
+              textInputType: TextInputType.visiblePassword,
+            ),
+            SizedBox(height: 15.0),
+
+            /// Note
+            CustomTextFormField(
+              controller: noteController,
+              label: 'Note',
+              maxLines: 6,
+              textInputType: TextInputType.multiline,
+            ),
+            SizedBox(height: 15.0),
+            buildSaveButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildCreditCard() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: kDefaultPadding,
+      ),
+      child: CreditCard(
+        cardNumber: this.cardNumber,
+        cardExpiry: this.expiryDate,
+        cardHolderName: this.cardHolderName,
+        cvv: this.cvvNumber,
+        bankName: bankName ?? 'Bank Name',
+        showBackSide: showBackSide,
+        frontBackground: GradientConatiner.buildGradientContainer(),
+        backBackground: GradientConatiner.buildGradientContainer(),
+        showShadow: true,
+        textExpDate: 'Exp. Date',
+        textName: 'Card Holder Name',
+        textExpiry: 'MM/YY',
+      ),
+    );
+  }
+
+  Widget buildSaveButton() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: kDefaultPadding * 0.5,
+        vertical: kDefaultPadding * 0.5,
+      ),
+      child: CustomElevatedButton(
+        buttonLabel: 'Save',
+        onPressed: _trySubmitForm,
       ),
     );
   }
 
   void _trySubmitForm() async {
-    final isCreditCardValid = _creditCardFormKey.currentState!.validate();
-    final isCustomCardValid = _extraFormKey.currentState!.validate();
+    final isCreditCardValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    if (isCreditCardValid && isCustomCardValid) {
+    if (isCreditCardValid) {
       try {
         await _firestore.collection('CardItems').add({
-          'cardNumber': MyEncryptionDecryption.encryptFernet(_cardNumber).base64,
-          'expiryDate': MyEncryptionDecryption.encryptFernet(_expiryDate).base64,
-          'cvvNumber': MyEncryptionDecryption.encryptFernet(_cvvNumber).base64,
-          'cardHolderName': _cardHolderName,
-          'bankName': _bankName.text,
-          'password': MyEncryptionDecryption.encryptFernet(_passwordController.text).base64,
-          'note': _noteController.text,
+          'cardNumber': MyEncryptionDecryption.encryptFernet(cardNumber).base64,
+          'expiryDate': MyEncryptionDecryption.encryptFernet(expiryDate).base64,
+          'cvvNumber': MyEncryptionDecryption.encryptFernet(cvvNumber).base64,
+          'cardHolderName': cardHolderName,
+          'bankName': bankName,
+          'title': titleController.text,
+          'password': MyEncryptionDecryption.encryptFernet(passwordController.text).base64,
+          'note': noteController.text,
         }).then((value) {
-          _cardNumber = null;
-          _expiryDate = null;
-          _cvvNumber = null;
-          _cardHolderName = null;
-          _passwordController.clear();
-          _noteController.clear();
+          cardNumber = null;
+          expiryDate = null;
+          cvvNumber = null;
+          cardHolderName = null;
+          bankName = null;
+          cardNumberController.clear();
+          cardHolderNameController.clear();
+          cvvNumberController.clear();
+          expiryDateController.clear();
+          bankNameController.clear();
+          passwordController.clear();
+          noteController.clear();
         });
-        CustomToast.showToast(message: '${_bankName.text} has been Added Successfully.');
+        CustomToast.showToast(message: '${titleController.text} has been Added Successfully.');
         Navigator.of(context).pushNamedAndRemoveUntil(
           BottomBarWidget.routeName,
           (route) => false,
           arguments: {1},
         );
-        _bankName.clear();
+        titleController.clear();
       } catch (e) {
         print(e);
       }
     }
-  }
-
-  CreditCardForm buildCarditCardForm() {
-    return CreditCardForm(
-      cardNumber: _cardNumber!,
-      expiryDate: _expiryDate!,
-      cardHolderName: _cardHolderName!,
-      cvvCode: _cvvNumber!,
-      onCreditCardModelChange: onCreditCardModelChange,
-      themeColor: Colors.blue,
-      formKey: _creditCardFormKey,
-      textColor: Colors.white,
-      cardNumberDecoration: buildCardDecoration(
-        labelText: 'Number *',
-        hintText: 'xxxx xxxx xxxx xxxx',
-        value: _cardNumber!,
-      ),
-      expiryDateDecoration: buildCardDecoration(
-        labelText: 'Expiry Date *',
-        hintText: 'xx/xx',
-        value: _expiryDate!,
-      ),
-      cvvCodeDecoration: buildCardDecoration(
-        labelText: 'CVV *',
-        hintText: 'xxx',
-        value: _cvvNumber!,
-      ),
-      cardHolderDecoration: buildCardDecoration(
-        labelText: 'Card Holder Name *',
-        value: _cardHolderName!,
-      ),
-    );
-  }
-
-  InputDecoration buildCardDecoration({
-    required String labelText,
-    String? hintText,
-    required String value,
-  }) {
-    return InputDecoration(
-      border: fOutlineInputBorder,
-      suffixIcon: CustomClipBoard.buildCopyClipboard(value: value),
-      enabledBorder: fOutlineInputEnabledBorder,
-      labelText: labelText,
-      labelStyle: kDecorationlabelStyle,
-      hintText: hintText ?? null,
-      hintStyle: kDecorationlabelStyle,
-    );
   }
 }

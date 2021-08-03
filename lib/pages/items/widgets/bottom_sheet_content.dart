@@ -165,6 +165,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
 
       return [
         buildBottomSheetCloseEditIcon(context, widget.item),
+        buildBottomSheetListTile('title', widget.item['title']),
         buildBottomSheetObscureListTile(_obscureCardNumber, _decryptedCardNumber, 'CardNumber', checkObscureCardNumber),
         buildBottomSheetListTile('ExpiryDate', _decryptedExpiryDate),
         buildBottomSheetObscureListTile(_obscureCVVNumber, _decryptedCVVNumber, 'CVVNumber', checkObscureCVVNumber),

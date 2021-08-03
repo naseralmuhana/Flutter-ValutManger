@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:password_manager/widgets/form/components/custom_credit_card_widget.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
@@ -19,10 +20,11 @@ class ItemCard extends StatefulWidget {
 
 class _ItemCardState extends State<ItemCard> {
   String? mainField;
+  bool showBackSide = false;
 
   void fillInfo() {
     if (widget.itemType == 'Cards') {
-      mainField = 'bankName';
+      mainField = 'title';
     } else if (widget.itemType == 'Logins') {
       mainField = 'name';
     } else if (widget.itemType == 'Notes') {
@@ -58,15 +60,16 @@ class _ItemCardState extends State<ItemCard> {
         iconData: Icons.open_in_browser,
         onPressed: () => _launchUrl(url: widget.item['url']),
       );
-    } else if (mainField == 'bankName') {
+    } else if (mainField == 'title') {
       return buildLoginButton(
         iconData: Icons.credit_card,
         onPressed: () => showDialog(
           context: context,
           builder: (context) {
             return CustomCreditCardWidget(
-              cardNumber: widget.item['cardNumber'],
+              bankName: widget.item['bankName'],
               cardHolderName: widget.item['cardHolderName'],
+              cardNumber: widget.item['cardNumber'],
               cvvNumber: widget.item['cvvNumber'],
               expiryDate: widget.item['expiryDate'],
             );
