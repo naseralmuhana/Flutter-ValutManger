@@ -1,11 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:password_manager/constants/variables.dart';
 import 'package:password_manager/pages/addItem/add_card.dart';
 import 'package:password_manager/pages/addItem/add_login.dart';
 import 'package:password_manager/pages/addItem/add_note.dart';
+import 'package:shifting_tabbar/shifting_tabbar.dart';
 
 class TabAppBar extends StatelessWidget {
   static final String routeName = 'TabAppBarRoute';
+
+  final List<ShiftingTab> shiftingBarTabs = <ShiftingTab>[
+    ShiftingTab(
+      icon: const Icon(
+        Icons.login_outlined,
+        color: Colors.white,
+      ),
+      text: 'Add Login',
+    ),
+    ShiftingTab(
+      icon: const Icon(
+        Icons.credit_card,
+        color: Colors.white,
+      ),
+      text: 'Add Card',
+    ),
+    ShiftingTab(
+      icon: const Icon(
+        Icons.note_add_outlined,
+        color: Colors.white,
+      ),
+      text: 'Add Note',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -13,19 +38,14 @@ class TabAppBar extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          body: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-              buildSliverAppBar(),
-            ],
-            body: buildScaffoldBody(),
-          ),
+          appBar: buildShiftingTabBar(),
+          body: buildScaffoldBody(),
         ),
       ),
     );
   }
 
-  TabBarView buildScaffoldBody() {
+  Widget buildScaffoldBody() {
     return TabBarView(
       children: [
         AddLoginPage(),
@@ -35,20 +55,10 @@ class TabAppBar extends StatelessWidget {
     );
   }
 
-  SliverAppBar buildSliverAppBar() {
-    return SliverAppBar(
-      pinned: true,
-      floating: true,
-      centerTitle: true,
-      title: Text('Add New Item'),
-      bottom: TabBar(
-        indicatorColor: kPrimaryColor,
-        tabs: [
-          Tab(icon: Icon(Icons.login_outlined), text: 'Login'),
-          Tab(icon: Icon(Icons.credit_card_outlined), text: 'Card'),
-          Tab(icon: Icon(Icons.note_add_outlined), text: 'Note'),
-        ],
-      ),
+  ShiftingTabBar buildShiftingTabBar() {
+    return ShiftingTabBar(
+      labelStyle: TextStyle(color: Colors.white),
+      tabs: shiftingBarTabs,
     );
   }
 }

@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:password_manager/widgets/clipBoard/clip_board.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final controller;
   final String label;
   final String? Function(String?)? validator;
+  final Function(String)? onChanged;
   final List<String>? autofillHints;
   final TextInputType? textInputType;
+  final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focusNode;
   final int? maxLines;
   final bool? obscureText;
+  final bool? noSuffixIcon;
 
-  CustomTextFormField(
-      {Key? key,
-      required this.controller,
-      required this.label,
-      this.validator,
-      this.autofillHints,
-      this.textInputType,
-      this.maxLines,
-      this.obscureText})
-      : super(key: key);
+  CustomTextFormField({
+    Key? key,
+    this.controller,
+    required this.label,
+    this.validator,
+    this.autofillHints,
+    this.textInputType,
+    this.maxLines,
+    this.obscureText,
+    this.onChanged,
+    this.inputFormatters,
+    this.focusNode,
+    this.noSuffixIcon,
+  }) : super(key: key);
 
   @override
   _CustomTextFormFieldState createState() => _CustomTextFormFieldState();
@@ -44,7 +53,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       keyboardType: widget.textInputType ?? TextInputType.text,
       obscureText: obscurePassword ?? false,
       maxLines: widget.maxLines ?? 1,
+      onChanged: widget.onChanged,
       // autofocus: true,
+      focusNode: widget.focusNode,
+      inputFormatters: widget.inputFormatters,
       validator: widget.validator ?? null,
       decoration: InputDecoration(
         labelText: widget.label,
@@ -53,14 +65,16 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           borderRadius: BorderRadius.circular(25.0),
           borderSide: BorderSide(),
         ),
-        suffixIcon: widget.maxLines == null
-            ? buildRowClipboard(
-                controller: widget.controller,
-                obscureTextField: obscurePassword,
-              )
-            : buildColumnClipboard(
-                controller: widget.controller,
-              ),
+        suffixIcon: widget.noSuffixIcon == true
+            ? CustomClipBoard.buildControllerCopyClipboard(controller: widget.controller)
+            : widget.maxLines == null
+                ? buildRowClipboard(
+                    controller: widget.controller,
+                    obscureTextField: obscurePassword,
+                  )
+                : buildColumnClipboard(
+                    controller: widget.controller,
+                  ),
       ),
     );
   }

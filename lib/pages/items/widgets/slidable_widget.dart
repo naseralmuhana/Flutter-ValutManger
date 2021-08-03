@@ -32,7 +32,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
 
   void fillInfo() {
     if (widget.itemType == 'Cards') {
-      mainField = 'bankName';
+      mainField = 'title';
       collectionName = 'CardItems';
       routeName = AddCardPage.routeName;
     } else if (widget.itemType == 'Logins') {
