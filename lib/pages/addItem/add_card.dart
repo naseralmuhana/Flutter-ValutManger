@@ -1,7 +1,6 @@
 import 'package:awesome_card/awesome_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import 'package:password_manager/constants/variables.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
