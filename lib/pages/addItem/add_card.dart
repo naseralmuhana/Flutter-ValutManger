@@ -5,6 +5,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import 'package:password_manager/constants/variables.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
+import 'package:password_manager/services/formatter/field_formatter.dart';
 import 'package:password_manager/services/validation.dart';
 import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
 import 'package:password_manager/widgets/form/components/custom_elevated_button.dart';
@@ -20,6 +21,9 @@ class AddCardPage extends StatefulWidget {
 }
 
 class _AddCardPageState extends State<AddCardPage> {
+  final Validation _validation = Validation();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   String? cardNumber = '';
   String? cardHolderName = '';
   String? cvvNumber = '';
@@ -27,9 +31,6 @@ class _AddCardPageState extends State<AddCardPage> {
   String? bankName;
   bool showBackSide = false;
 
-  Validation _validation = Validation();
-
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController cardNumberController;
   late TextEditingController cardHolderNameController;
@@ -40,18 +41,6 @@ class _AddCardPageState extends State<AddCardPage> {
   late TextEditingController passwordController;
   late TextEditingController noteController;
   late FocusNode _focusNode;
-  var cardNumberFormatter = MaskTextInputFormatter(
-    mask: '#### #### #### ####',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
-  var cvvNumberFormatter = MaskTextInputFormatter(
-    mask: '###',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
-  var expiryDateFormatter = MaskTextInputFormatter(
-    mask: '##/##',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
 
   @override
   void initState() {
@@ -114,7 +103,7 @@ class _AddCardPageState extends State<AddCardPage> {
               controller: cardNumberController,
               label: 'Card Number *',
               validator: _validation.isEmptyValidation,
-              inputFormatters: [cardNumberFormatter],
+              inputFormatters: [FieldFormatter.cardNumberFormatter],
               textInputType: TextInputType.number,
               onChanged: (value) => setState(() => cardNumber = value),
             ),
@@ -126,7 +115,7 @@ class _AddCardPageState extends State<AddCardPage> {
                     controller: expiryDateController,
                     label: 'Expiry Date *',
                     validator: _validation.isEmptyValidation,
-                    inputFormatters: [expiryDateFormatter],
+                    inputFormatters: [FieldFormatter.expiryDateFormatter],
                     textInputType: TextInputType.number,
                     onChanged: (value) => setState(() => expiryDate = value),
                     noSuffixIcon: true,
@@ -138,7 +127,7 @@ class _AddCardPageState extends State<AddCardPage> {
                     controller: cvvNumberController,
                     label: 'CVV *',
                     validator: _validation.isEmptyValidation,
-                    inputFormatters: [cvvNumberFormatter],
+                    inputFormatters: [FieldFormatter.cvvNumberFormatter],
                     textInputType: TextInputType.number,
                     onChanged: (value) => setState(() => cvvNumber = value),
                     focusNode: _focusNode,

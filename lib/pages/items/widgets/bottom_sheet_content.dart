@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:password_manager/pages/addItem/add_card.dart';
+import 'package:password_manager/pages/editItem/edit_card.dart';
 import 'package:password_manager/pages/editItem/edit_login.dart';
 import 'package:password_manager/pages/editItem/edit_note.dart';
 import 'package:password_manager/services/encrypt/my_encryption.dart';
@@ -154,7 +154,7 @@ class _BottomSheetCententState extends State<BottomSheetCentent> {
         SizedBox(height: 30.0)
       ];
     } else if (widget.itemType == 'Cards') {
-      routeName = AddCardPage.routeName;
+      routeName = EditCardPage.routeName;
       String _decryptedPassword = MyEncryptionDecryption.decrypt64Fernet(widget.item['password']);
       String _obscurePassword = '●' * _decryptedPassword.length;
       String _decryptedCardNumber = MyEncryptionDecryption.decrypt64Fernet(widget.item['cardNumber']);

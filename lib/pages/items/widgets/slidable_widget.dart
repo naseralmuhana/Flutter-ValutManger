@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:password_manager/constants/variables.dart';
-import 'package:password_manager/pages/addItem/add_card.dart';
+import 'package:password_manager/pages/editItem/edit_card.dart';
 import 'package:password_manager/pages/editItem/edit_login.dart';
 import 'package:password_manager/pages/editItem/edit_note.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
@@ -34,7 +34,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
     if (widget.itemType == 'Cards') {
       mainField = 'title';
       collectionName = 'CardItems';
-      routeName = AddCardPage.routeName;
+      routeName = EditCardPage.routeName;
     } else if (widget.itemType == 'Logins') {
       mainField = 'name';
       collectionName = 'LoginItems';
