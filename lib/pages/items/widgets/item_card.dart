@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:password_manager/widgets/form/components/custom_credit_card_widget.dart';
 import 'package:password_manager/widgets/toast/toast.dart';
@@ -114,10 +113,19 @@ class _ItemCardState extends State<ItemCard> {
   Future _launchUrl({String? url}) async {
     if (url!.isEmpty) {
       CustomToast.showToast(message: 'There is no Url.');
-    } else if (await canLaunch('http://$url')) {
-      await launch('http://$url');
-    } else {
-      CustomToast.showToast(message: 'Could not launch http://$url');
+    } else if (url.contains('https://')) {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        CustomToast.showToast(message: 'Could not launch $url');
+      }
+    } else if (!url.contains('http://')) {
+      print('not');
+      if (await canLaunch('http://$url')) {
+        await launch('http://$url');
+      } else {
+        CustomToast.showToast(message: 'Could not launch http://$url');
+      }
     }
   }
 }
