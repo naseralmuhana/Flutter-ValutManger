@@ -67,7 +67,7 @@ class _EditLoginPageState extends State<EditLoginPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Edit Item'),
+        title: Text('Edit Login'),
       ),
       body: SingleChildScrollView(
         child: Container(
