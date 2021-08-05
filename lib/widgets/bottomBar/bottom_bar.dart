@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/constants/variables.dart';
+import 'package:password_manager/pages/generatePassword/generate_password_page.dart';
 
 import 'package:password_manager/pages/items/items.dart';
 
@@ -24,7 +25,7 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
       {'page': ItemsPage(itemsType: 'Cards')},
       {'page': ItemsPage(itemsType: 'Cards')},
       {'page': ItemsPage(itemsType: 'Notes')},
-      {'page': ItemsPage(itemsType: 'Notes')},
+      {'page': GeneratePasswordPage()},
     ];
     super.initState();
   }
@@ -94,9 +95,9 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
       tooltip: 'Notes',
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: 'User',
-      tooltip: 'User',
+      icon: Icon(Icons.password_outlined),
+      label: 'Password',
+      tooltip: 'Generate Password',
     ),
   ];
 }
