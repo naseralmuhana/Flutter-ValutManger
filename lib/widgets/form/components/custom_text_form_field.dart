@@ -54,6 +54,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       obscureText: obscurePassword ?? false,
       maxLines: widget.maxLines ?? 1,
       onChanged: widget.onChanged,
+      // style: TextStyle(fontFamily: 'Hahmlet'),
       // autofocus: true,
       focusNode: widget.focusNode,
       inputFormatters: widget.inputFormatters,

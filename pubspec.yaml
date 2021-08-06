@@ -41,10 +41,8 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   fonts:
-    - family: customFont
+    - family: Hahmlet
       fonts:
-        - asset: assets/fonts/GlacialIndifference-Regular.otf
-        - asset: assets/fonts/GlacialIndifference-Bold.otf
-          weight: 800
+        - asset: assets/fonts/Hahmlet-Regular.ttf
 
 

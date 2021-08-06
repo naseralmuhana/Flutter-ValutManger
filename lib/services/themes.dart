@@ -16,7 +16,12 @@ ThemeData darkThemeData = ThemeData.dark().copyWith(
     ),
   ),
   scaffoldBackgroundColor: Color(0xff151515),
-  textTheme: TextTheme().apply(
-    fontFamily: "customFont",
+  textTheme: TextTheme(
+    bodyText2: TextStyle(
+      fontFamily: "Hahmlet",
+    ),
+    subtitle1: TextStyle(
+      fontFamily: "Hahmlet",
+    ),
   ),
 );
