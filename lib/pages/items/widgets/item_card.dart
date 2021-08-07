@@ -47,19 +47,28 @@ class _ItemCardState extends State<ItemCard> {
           ),
           leading: buildListTileLeading(),
           title: buildListTileTitle(),
+          subtitle: getListTileSubTitle(),
           trailing: getListTileTrailing(),
         ),
       ),
     );
   }
 
+  Widget? getListTileSubTitle() {
+    if (widget.itemType == 'Logins') {
+      return Text(widget.item['username']);
+    } else if (widget.itemType == 'Cards') {
+      return Text(widget.item['cardHolderName']);
+    }
+  }
+
   Widget getListTileTrailing() {
-    if (mainField == 'name') {
+    if (widget.itemType == 'Logins') {
       return buildLoginButton(
         iconData: Icons.open_in_browser,
         onPressed: () => _launchUrl(url: widget.item['url']),
       );
-    } else if (mainField == 'title') {
+    } else if (widget.itemType == 'Cards') {
       return buildLoginButton(
         iconData: Icons.credit_card,
         onPressed: () => showDialog(
