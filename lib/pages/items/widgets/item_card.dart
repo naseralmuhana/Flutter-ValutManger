@@ -120,6 +120,7 @@ class _ItemCardState extends State<ItemCard> {
 
   /// methods
   Future _launchUrl({String? url}) async {
+    print('');
     if (url!.isEmpty) {
       CustomToast.showToast(message: 'There is no Url.');
     } else if (url.contains('https://')) {
