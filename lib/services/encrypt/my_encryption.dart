@@ -1,8 +1,13 @@
 import 'package:encrypt/encrypt.dart' as encrypt;
 
+//TODO 1 :add value to the [encryptionKey] and it should be 32 charaters length like the example
+//example : 'it32lengthbiggersecretnooneknows'
+
+const String encryptionKey = '';
+
 class MyEncryptionDecryption {
   /// for Fernet encryption/decryption
-  static final keyFernet = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
+  static final keyFernet = encrypt.Key.fromUtf8(encryptionKey);
   static final fernet = encrypt.Fernet(keyFernet);
   static final encrypterFernet = encrypt.Encrypter(fernet);
 

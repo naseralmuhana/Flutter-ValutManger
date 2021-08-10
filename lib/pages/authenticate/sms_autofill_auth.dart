@@ -6,8 +6,11 @@ import 'package:password_manager/pages/authenticate/pin_code_auth.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:telephony/telephony.dart';
 
-const String signCode = 'egW8syn8yWl';
-const String _phoneNumber = '962787828021';
+//TODO 3 : fill the _phoneNumber with your phone number
+const String _phoneNumber = '';
+
+//TODO 4 : use google and search 'SmsAutoFill().getAppSignature' and see how to get ur sign code and fill it in the [signCode]
+const String signCode = '';
 
 class SMSAutoFillAuthPage extends StatefulWidget {
   static final String routeName = 'SMSAutoFillAuthPageRoute';

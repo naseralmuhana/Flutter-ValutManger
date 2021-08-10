@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:password_manager/widgets/bottomBar/bottom_bar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+//TODO 2 : fill the [_requiredNumber] with 6 digit number (this for the pin code page to gain access)
+//example : '123456'
+
+const String _requiredNumber = '';
+
 class PinCodeAuthPage extends StatefulWidget {
   static final String routeName = 'PinCodeAuthPageRoute';
 
@@ -11,7 +16,6 @@ class PinCodeAuthPage extends StatefulWidget {
 }
 
 class _PinCodeAuthPageState extends State<PinCodeAuthPage> {
-  final String _requiredNumber = '261097';
   late StreamController<ErrorAnimationType> _errorController;
   TextEditingController _pinCodeTextEditingController = TextEditingController();
   bool hasError = false;
